@@ -38,7 +38,7 @@ export default class OrganizationIntegrations extends AsyncView {
         itemList: sortArray(itemList, item => item.name)
       });
     } else {
-      IndicatorStore.add(t('An error occurred: %s.', data.detail), 'error', {
+      IndicatorStore.add(data.detail, 'error', {
         duration: 5000
       });
     }
@@ -80,11 +80,8 @@ export default class OrganizationIntegrations extends AsyncView {
   };
 
   launchAddIntegration = integration => {
-    let url = `${integration.setupUri}?callback=${this.dialogCallbackName}&init=1`;
     let name = 'sentryAddIntegration';
-    let width = 400;
-    let height = 400;
-
+    let {url, width, height} = integration.setupDialog;
     // this attempts to center the dialog
     let screenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
     let screenTop = window.screenTop != undefined ? window.screenTop : screen.top;
